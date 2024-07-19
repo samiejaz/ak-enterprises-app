@@ -33,7 +33,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     {
       "title": "Day Closing",
       "icon": Icons.history,
-      "routeUrl": "/receivingshistory",
+      "routeUrl": "/dayclosing",
     },
   ];
 
@@ -56,14 +56,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             children: [
               Icon(
                 icon,
-                color: Constants.textColor,
+                color: Colors.white,
                 size: 50,
               ),
               const SizedBox(height: 20),
               Text(
                 title,
-                style:
-                    const TextStyle(color: Constants.textColor, fontSize: 18),
+                style: const TextStyle(color: Colors.white, fontSize: 18),
               ),
             ],
           )),
@@ -120,7 +119,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   height: 10,
                 ),
                 // Links
-                Expanded(
+                SizedBox(
+                  height: 500,
                   child: GridView.builder(
                     itemCount: items.length,
                     gridDelegate:
@@ -135,6 +135,20 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     },
                   ),
                 ),
+                // Addtional Links
+
+                Container(
+                  margin: const EdgeInsets.all(0),
+                  decoration: BoxDecoration(
+                      color: Constants.secondaryColor,
+                      borderRadius: BorderRadiusDirectional.circular(5)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
+                  child: const Text(
+                    "History",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
               ],
             )),
       ),

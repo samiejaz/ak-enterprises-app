@@ -7,7 +7,7 @@ class Constants {
   // static const Color primaryColor = Color.fromRGBO(250, 204, 21, 1);
   static const Color primaryColor = Color.fromRGBO(234, 179, 8, 1);
 
-  static const Color secondaryColor = Color.fromRGBO(241, 245, 249, 1);
+  static const Color secondaryColor = Color.fromRGBO(65, 105, 225, 1);
   static const Color dangerColor = Color(0xFFFF0000);
   static const Color accentColor = Color(0xFFFFC107);
 }
