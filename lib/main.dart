@@ -2,6 +2,7 @@ import 'package:ak_enterprises_app/screens/dash_board_screen.dart';
 import 'package:ak_enterprises_app/screens/day_closing_screen.dart';
 import 'package:ak_enterprises_app/screens/deliveries_history_screen.dart';
 import 'package:ak_enterprises_app/screens/deliveries_screen.dart';
+import 'package:ak_enterprises_app/screens/history_screen.dart';
 import 'package:ak_enterprises_app/screens/login_screen.dart';
 import 'package:ak_enterprises_app/screens/receivings_history_screen.dart';
 import 'package:ak_enterprises_app/screens/receivings_screen.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         "/receivings": (context) => const ReceivingsScreen(),
         "/receivingshistory": (context) => const ReceivingsHistoryScreen(),
         "/dayclosing": (context) => const DayClosingScreen(),
+        "/history": (context) => const HistoryScreen(),
       },
     );
   }

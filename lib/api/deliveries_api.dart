@@ -6,8 +6,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<DeliveriesModel>> getAllDeliveries(String voucherDate) async {
   try {
-    String url =
-        "${APIConstants.baseUrl}/GetAllDateWiseDeliveries/GetAllDateWiseDeliveries/";
+    String url = "${APIConstants.baseUrl}/Deliveries/GetAllDateWiseDeliveries/";
 
     Map<String, dynamic> jsonBody = {'VoucherDate': voucherDate};
 

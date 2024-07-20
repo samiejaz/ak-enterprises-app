@@ -9,19 +9,22 @@ class DatePickerComponent extends StatefulWidget {
   final EdgeInsetsGeometry contentPadding;
   final ValueChanged<DateTime> onDateSelected;
   final String format;
+  final String hintText;
 
-  const DatePickerComponent(
-      {super.key,
-      required this.onDateSelected,
-      this.label = '',
-      this.borderRadius = 8.0,
-      this.borderColor = Colors.blue,
-      this.focusedBorderColor = Colors.green,
-      this.contentPadding = const EdgeInsets.symmetric(
-        horizontal: 16.0,
-        vertical: 12.0,
-      ),
-      this.format = "dd-MMM-yyyy"});
+  const DatePickerComponent({
+    super.key,
+    required this.onDateSelected,
+    this.label = '',
+    this.borderRadius = 0,
+    this.borderColor = Colors.grey,
+    this.focusedBorderColor = Colors.green,
+    this.contentPadding = const EdgeInsets.symmetric(
+      horizontal: 8.0,
+      vertical: 6.0,
+    ),
+    this.format = "dd-MMM-yyyy",
+    this.hintText = '',
+  });
 
   @override
   _DatePickerComponentState createState() => _DatePickerComponentState();
@@ -56,6 +59,7 @@ class _DatePickerComponentState extends State<DatePickerComponent> {
       onTap: () => _selectDate(context),
       child: InputDecorator(
         decoration: InputDecoration(
+          hintText: widget.hintText,
           labelText: widget.label,
           border: OutlineInputBorder(
             borderRadius:
@@ -81,14 +85,11 @@ class _DatePickerComponentState extends State<DatePickerComponent> {
               width: 2.0,
             ),
           ),
+          isDense: true,
           contentPadding: widget.contentPadding,
         ),
         child: Text(
-          formattedDate,
-          style: TextStyle(
-            fontSize: 12.0,
-            color: selectedDate == null ? Colors.grey : Colors.black,
-          ),
+          selectedDate == null ? widget.hintText : formattedDate,
         ),
       ),
     );

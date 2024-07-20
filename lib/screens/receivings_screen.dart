@@ -1,551 +1,263 @@
-import 'dart:io';
+import 'package:ak_enterprises_app/api/receivings_api.dart';
 
-import 'package:ak_enterprises_app/components/date_picker_component.dart';
-import 'package:ak_enterprises_app/components/number_input_component.dart';
-
+import 'package:ak_enterprises_app/models/receivings_model.dart';
+import 'package:ak_enterprises_app/utils/common_functions.dart';
 import 'package:flutter/material.dart';
-
-import 'package:image_picker/image_picker.dart';
 
 class ReceivingsScreen extends StatefulWidget {
   const ReceivingsScreen({super.key});
 
   @override
-  State<ReceivingsScreen> createState() => _ReceivingsScreenState();
+  State<ReceivingsScreen> createState() => ReceivingsScreenState();
 }
 
-class _ReceivingsScreenState extends State<ReceivingsScreen> {
-  final TextEditingController cashReceivedController = TextEditingController();
-  bool _isChecked = false;
+class ReceivingsScreenState extends State<ReceivingsScreen> {
+  DateTime selectedDate = DateTime.now();
 
-  File? _image;
+  // ** MOCK DATA
+  // List<ReceivingsModel> deliveries = [
+  //   ReceivingsModel(
+  //       voucherID: 1,
+  //       customerName: "Customer 1",
+  //       voucherNo: "1",
+  //       amount: 19000,
+  //       status: "PENDING"),
+  //   ReceivingsModel(
+  //       voucherID: 1,
+  //       customerName: "Customer 1",
+  //       voucherNo: "1",
+  //       amount: 19000,
+  //       status: "COMPLETED"),
+  //   ReceivingsModel(
+  //       voucherID: 1,
+  //       customerName: "Customer 1",
+  //       voucherNo: "1",
+  //       amount: 19000,
+  //       status: "PENDING"),
+  //   ReceivingsModel(
+  //       voucherID: 1,
+  //       customerName: "Customer 1",
+  //       voucherNo: "1",
+  //       amount: 19000,
+  //       status: "PENDING"),
+  // ];
 
-  final _picker = ImagePicker();
-  Future<void> _openImagePicker() async {
-    final pickedImage = await showDialog<XFile>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Select Image Source'),
-          actions: [
-            TextButton(
-              child: const Text('Camera'),
-              onPressed: () async {
-                Navigator.of(context)
-                    .pop(await _picker.pickImage(source: ImageSource.camera));
-              },
-            ),
-            TextButton(
-              child: const Text('Gallery'),
-              onPressed: () async {
-                Navigator.of(context)
-                    .pop(await _picker.pickImage(source: ImageSource.gallery));
-              },
-            ),
-          ],
-        );
-      },
-    );
+  // Future<List<ReceivingsModel>> getD(String date) async {
+  //   print("Called!!");
+  //   return deliveries;
+  // }
 
-    if (pickedImage != null) {
-      setState(() {
-        _image = File(pickedImage.path);
-      });
-    }
-  }
-
-  void _toggleCheckbox(bool? value) {
-    setState(() {
-      _isChecked = value!;
-    });
-  }
-
-  Widget _recordInfo() {
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(color: Colors.blue, width: 2.0))),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Customer Name:",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Invoice No:",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Abdul Sami",
-                style: TextStyle(color: Colors.black),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "12345678",
-                style: TextStyle(color: Colors.black),
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Inv Type: ",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Inv Val:",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Software",
-                style: TextStyle(color: Colors.black),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "190000000",
-                style: TextStyle(color: Colors.black),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _form() {
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Row 1
-            Row(
-              children: [
-                const Expanded(
-                  flex: 4,
-                  child: Center(
-                    child: Text("Cheque Received"),
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  flex: 8,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: NumberInputComponent(
-                          controller: cashReceivedController,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+      color: Colors.blue,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.blue,
+            title: const Text(
+              "Receivings",
+              style: TextStyle(color: Colors.white),
             ),
-            const SizedBox(height: 10),
+            foregroundColor: Colors.white,
+          ),
+          body: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            final DateTime? dateTime = await showDatePicker(
+                                context: context,
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(3000));
 
-            // Row 2
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Expanded(
-                  flex: 4,
-                  child: Center(
-                    child: Text("Cheque Received"),
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  flex: 8,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: NumberInputComponent(
-                              controller: cashReceivedController,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: DatePickerComponent(
-                              onDateSelected: (value) {},
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 8,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: NumberInputComponent(
-                                    controller: cashReceivedController,
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Checkbox(
-                                  value: _isChecked,
-                                  onChanged: _toggleCheckbox,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-
-            // Row 3
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Expanded(
-                  flex: 4,
-                  child: Center(
-                    child: Text("Online Payment"),
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  flex: 8,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: NumberInputComponent(
-                              controller: cashReceivedController,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 8,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: NumberInputComponent(
-                                    controller: cashReceivedController,
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Checkbox(
-                                  value: _isChecked,
-                                  onChanged: _toggleCheckbox,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-
-            // Row 4
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Expanded(
-                  flex: 4,
-                  child: Text("WHT:"),
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  flex: 8,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: NumberInputComponent(
-                              controller: cashReceivedController,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: DatePickerComponent(
-                              onDateSelected: (value) {},
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 8,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Checkbox(
-                                  value: _isChecked,
-                                  onChanged: _toggleCheckbox,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-
-            // Row 5
-            Row(
-              children: [
-                const Expanded(
-                  flex: 4,
-                  child: Center(
-                    child: Text("Upload Receiving"),
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  flex: 8,
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: GestureDetector(
-                        onTap: _openImagePicker,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: _image != null
-                                  ? Colors.blue
-                                  : const Color.fromARGB(255, 39, 187, 76)),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 15),
-                          child: Center(
+                            if (dateTime != null) {
+                              setState(() {
+                                selectedDate = dateTime;
+                              });
+                            }
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(width: 1),
+                                borderRadius: BorderRadius.circular(5)),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
                             child: Text(
-                              _image != null
-                                  ? "File Uploaded"
-                                  : "Take Pic/Upload",
+                              formatDateToDDMMYYYY(selectedDate),
                               style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16),
+                                  fontSize: 16, fontWeight: FontWeight.w500),
                             ),
                           ),
                         ),
-                      )),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Expanded(
-                  flex: 4,
-                  child: Center(
-                    child: Text(
-                      "Return Stock Value",
-                      textAlign: TextAlign.center,
+                        const Spacer(),
+                        Text(
+                          getDayName(selectedDate),
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.underline),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  flex: 8,
-                  child: Column(
-                    children: [
-                      const Row(
-                        children: [
-                          Expanded(
-                              child: Center(
-                            child: Text(
-                              "Return From Invoice",
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: Colors.blue),
-                            ),
-                          )),
-                        ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Center(
+                      child: Text(
+                        "Today Receivings",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 8,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: NumberInputComponent(
-                                    controller: cashReceivedController,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    FutureBuilder(
+                        future:
+                            getAllRecevings(formatDateToDDMMYYYY(selectedDate)),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            String totalAmount = snapshot.data!
+                                .fold<double>(
+                                    0,
+                                    (previousValue, element) =>
+                                        previousValue + element.amount)
+                                .toString();
+
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: DataTable(
+                                  headingTextStyle:
+                                      const TextStyle(color: Colors.white),
+                                  headingRowColor:
+                                      WidgetStateProperty.resolveWith<Color>(
+                                    (Set<WidgetState> states) {
+                                      return Colors.blue;
+                                    },
                                   ),
+                                  columns: const [
+                                    DataColumn(
+                                        label: Center(child: Text("Actions"))),
+                                    DataColumn(label: Text("Sr")),
+                                    DataColumn(label: Text("Customer Name")),
+                                    DataColumn(label: Text("Inv #")),
+                                    DataColumn(
+                                      label: Text("Amount"),
+                                    ),
+                                    DataColumn(label: Text("Status")),
+                                  ],
+                                  rows: [
+                                    ...snapshot.data!
+                                        .asMap()
+                                        .entries
+                                        .map((entry) {
+                                      int index = entry.key;
+                                      ReceivingsModel delivery = entry.value;
+                                      return DataRow(
+                                          color: WidgetStateProperty
+                                              .resolveWith<Color>(
+                                            (Set<WidgetState> states) {
+                                              return getColor(delivery.status);
+                                            },
+                                          ),
+                                          cells: [
+                                            DataCell(getActions(delivery)),
+                                            DataCell(
+                                                Text((index + 1).toString())),
+                                            DataCell(
+                                                Text(delivery.customerName)),
+                                            DataCell(Text(delivery.voucherNo)),
+                                            DataCell(Text(
+                                                delivery.amount.toString())),
+                                            DataCell(Text(delivery.status)),
+                                          ]);
+                                    }),
+                                    DataRow(
+                                      color: WidgetStateProperty.all(
+                                          Colors.grey.withOpacity(0.3)),
+                                      cells: <DataCell>[
+                                        const DataCell(Text('')),
+                                        const DataCell(Text('Total',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold))),
+                                        const DataCell(Text('')),
+                                        DataCell(Text(totalAmount,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold))),
+                                        const DataCell(Text('')),
+                                        const DataCell(Text('')),
+                                      ],
+                                    ),
+                                  ]),
+                            );
+                          } else if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return const Center(
+                              child: Text("Error!"),
+                            );
+                          } else {
+                            return DataTable(
+                              columns: const [
+                                DataColumn(label: Text("Sr")),
+                                DataColumn(label: Text("Customer Name")),
+                                DataColumn(label: Text("Inv #")),
+                                DataColumn(
+                                  label: Text("Amount"),
                                 ),
+                                DataColumn(label: Text("Status")),
+                                DataColumn(
+                                    label: Center(child: Text("Actions")))
                               ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 8,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: NumberInputComponent(
-                                    controller: cashReceivedController,
-                                  ),
-                                ),
+                              rows: const [
+                                DataRow(cells: [
+                                  DataCell(Text("No Record(s) Found!")),
+                                  DataCell(Text("")),
+                                  DataCell(Text("")),
+                                  DataCell(Text("")),
+                                  DataCell(Text("")),
+                                  DataCell(Text("")),
+                                ])
                               ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                const Expanded(
-                  flex: 4,
-                  child: Center(
-                    child: Text(
-                      "Receving Bounced",
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  flex: 8,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: NumberInputComponent(
-                          controller: cashReceivedController,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                const Expanded(
-                  flex: 4,
-                  child: Center(
-                    child: Text("Next Due Date"),
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  flex: 8,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: NumberInputComponent(
-                          controller: cashReceivedController,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: GestureDetector(
-                child: Container(
-                  width: 200,
-                  decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 39, 187, 76)),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  child: const Center(
-                    child: Text(
-                      "Save",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16),
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
+                            );
+                          }
+                        })
+                  ],
+                )),
+          ),
         ),
       ),
     );
   }
+}
 
-  Widget showCompleteDeliveryPopup() {
-    return SingleChildScrollView(
-        child: Column(children: [_recordInfo(), _form()]));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(body: showCompleteDeliveryPopup()));
-  }
+Widget getActions(ReceivingsModel delivery) {
+  return Row(
+    children: [
+      IconButton(
+        onPressed: () {},
+        icon: const Icon(Icons.remove_red_eye),
+        color: Colors.blueGrey,
+      ),
+      IconButton(
+        onPressed: () {},
+        icon: const Icon(Icons.edit),
+        color: Colors.green,
+      ),
+      IconButton(
+        onPressed: () {},
+        icon: const Icon(Icons.delete),
+        color: Colors.red,
+      ),
+    ],
+  );
 }

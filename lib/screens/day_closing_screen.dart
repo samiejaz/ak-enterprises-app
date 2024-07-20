@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -22,128 +21,145 @@ class _DayClosingScreenState extends State<DayClosingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () async {
-                        final DateTime? dateTime = await showDatePicker(
-                            context: context,
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(3000));
+    return Container(
+      color: Colors.blue,
+      child: SafeArea(
+        child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {},
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            child: const Icon(Icons.save),
+          ),
+          appBar: AppBar(
+            backgroundColor: Colors.blue,
+            title: const Text(
+              "Day Closing",
+              style: TextStyle(color: Colors.white),
+            ),
+            foregroundColor: Colors.white,
+          ),
+          body: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          final DateTime? dateTime = await showDatePicker(
+                              context: context,
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(3000));
 
-                        if (dateTime != null) {
-                          setState(() {
-                            selectedDate = dateTime;
-                          });
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 1),
-                            borderRadius: BorderRadius.circular(5)),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        child: Text(
-                          _formatDateToDDMMYYYY(selectedDate),
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
+                          if (dateTime != null) {
+                            setState(() {
+                              selectedDate = dateTime;
+                            });
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1),
+                              borderRadius: BorderRadius.circular(5)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          child: Text(
+                            _formatDateToDDMMYYYY(selectedDate),
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
                         ),
                       ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      _getDayName(selectedDate),
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          decoration: TextDecoration.underline),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Day Cosing/Handover",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    DayClosingAmounts(
-                      headerTitle: "Total Supplies: ",
-                      cash: 19000,
-                      receiving: 190000,
-                      cheque: 199000,
-                      online: 190000,
-                      returnAmount: 1000,
-                    ),
-                    DayClosingAmounts(
-                      headerTitle: "Total Receivings: ",
-                      cash: 19000,
-                      receiving: 190000,
-                      cheque: 199000,
-                      online: 190000,
-                      returnAmount: 1000,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    DayClosingAmounts(
-                      headerTitle: "Total: ",
-                      cash: 19000,
-                      receiving: 190000,
-                      cheque: 199000,
-                      online: 190000,
-                      returnAmount: 1000,
-                      showHandOverButton: true,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const Spacer(),
-                GestureDetector(
-                  child: Container(
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 39, 187, 76)),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 40, vertical: 15),
-                    child: const Center(
-                      child: Text(
-                        "Save",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16),
+                      const Spacer(),
+                      Text(
+                        _getDayName(selectedDate),
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline),
                       ),
-                    ),
+                    ],
                   ),
-                )
-              ],
-            )),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Day Cosing/Handover",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w700),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      DayClosingAmounts(
+                        headerTitle: "Total Supplies: ",
+                        cash: 19000,
+                        receiving: 190000,
+                        cheque: 199000,
+                        online: 190000,
+                        returnAmount: 1000,
+                      ),
+                      DayClosingAmounts(
+                        headerTitle: "Total Receivings: ",
+                        cash: 19000,
+                        receiving: 190000,
+                        cheque: 199000,
+                        online: 190000,
+                        returnAmount: 1000,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DayClosingAmounts(
+                        headerTitle: "Total: ",
+                        cash: 19000,
+                        receiving: 190000,
+                        cheque: 199000,
+                        online: 190000,
+                        returnAmount: 1000,
+                        showHandOverButton: true,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  // const Spacer(),
+                  // GestureDetector(
+                  //   child: Container(
+                  //     width: double.infinity,
+                  //     decoration: const BoxDecoration(
+                  //         color: Color.fromARGB(255, 39, 187, 76)),
+                  //     padding: const EdgeInsets.symmetric(
+                  //         horizontal: 40, vertical: 15),
+                  //     child: const Center(
+                  //       child: Text(
+                  //         "Save",
+                  //         style: TextStyle(
+                  //             color: Colors.white,
+                  //             fontWeight: FontWeight.w700,
+                  //             fontSize: 16),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
+                ],
+              )),
+        ),
       ),
     );
   }
@@ -177,62 +193,40 @@ class DayClosingAmounts extends StatelessWidget {
         Text(
           headerTitle,
           style: const TextStyle(
-              fontSize: 18,
+              fontSize: 14,
               decoration: TextDecoration.underline,
               fontWeight: FontWeight.w700),
         ),
         const SizedBox(
-          height: 10,
+          height: 5,
         ),
         Row(
           children: [
-            const Text(
-              "Cash: ",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      "Cash: ",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      cash != null ? cash!.toStringAsFixed(2) : "",
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                )
+              ],
             ),
-            Text(
-              cash != null ? cash!.toStringAsFixed(2) : "",
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-            if (showHandOverButton) ...[
-              TextButton(onPressed: () {}, child: const Text("Handover"))
-            ]
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: [
-            const Text(
-              "Receiving: ",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-            Text(
-              receiving != null ? receiving!.toStringAsFixed(2) : "",
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-            if (showHandOverButton) ...[
-              TextButton(onPressed: () {}, child: const Text("Handover"))
-            ]
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: [
-            const Text(
-              "Cheque: ",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-            Text(
-              cheque != null ? cheque!.toStringAsFixed(2) : "",
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-            if (showHandOverButton) ...[
-              TextButton(onPressed: () {}, child: const Text("Handover"))
-            ]
+            Column(
+              children: [
+                if (showHandOverButton) ...[
+                  TextButton(onPressed: () {}, child: const Text("Handover"))
+                ]
+              ],
+            )
           ],
         ),
         const SizedBox(
@@ -240,35 +234,130 @@ class DayClosingAmounts extends StatelessWidget {
         ),
         Row(
           children: [
-            const Text(
-              "Online: ",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      "Recivings: ",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      receiving != null ? receiving!.toStringAsFixed(2) : "",
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                )
+              ],
             ),
-            Text(
-              online != null ? online!.toStringAsFixed(2) : "",
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-            if (showHandOverButton) ...[
-              TextButton(onPressed: () {}, child: const Text("Handover"))
-            ]
+            Column(
+              children: [
+                if (showHandOverButton) ...[
+                  TextButton(onPressed: () {}, child: const Text("Handover"))
+                ]
+              ],
+            )
           ],
         ),
         const SizedBox(
-          height: 10,
+          height: 5,
         ),
         Row(
           children: [
-            const Text(
-              "Return: ",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      "Cheque: ",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      cheque != null ? cheque!.toStringAsFixed(2) : "",
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                )
+              ],
             ),
-            Text(
-              returnAmount != null ? returnAmount!.toStringAsFixed(2) : "",
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            Column(
+              children: [
+                if (showHandOverButton) ...[
+                  TextButton(onPressed: () {}, child: const Text("Handover"))
+                ]
+              ],
+            )
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Row(
+          children: [
+            Column(
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      "Online: ",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      online != null ? online!.toStringAsFixed(2) : "",
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                )
+              ],
             ),
-            if (showHandOverButton) ...[
-              TextButton(onPressed: () {}, child: const Text("Handover"))
-            ]
+            Column(
+              children: [
+                if (showHandOverButton) ...[
+                  TextButton(onPressed: () {}, child: const Text("Handover"))
+                ]
+              ],
+            )
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      "Return: ",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      returnAmount != null
+                          ? returnAmount!.toStringAsFixed(2)
+                          : "",
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            Column(
+              children: [
+                if (showHandOverButton) ...[
+                  TextButton(onPressed: () {}, child: const Text("Handover"))
+                ]
+              ],
+            )
           ],
         ),
       ],

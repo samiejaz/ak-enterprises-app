@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class NumberInputComponent extends StatelessWidget {
+class TextInputComponent extends StatelessWidget {
   final TextEditingController controller;
   final double borderRadius;
   final Color borderColor;
@@ -8,7 +8,7 @@ class NumberInputComponent extends StatelessWidget {
   final EdgeInsetsGeometry contentPadding;
   final String hintText;
 
-  const NumberInputComponent({
+  const TextInputComponent({
     super.key,
     required this.controller,
     this.borderRadius = 0,
@@ -16,7 +16,7 @@ class NumberInputComponent extends StatelessWidget {
     this.focusedBorderColor = Colors.green,
     this.contentPadding = const EdgeInsets.symmetric(
       horizontal: 8.0,
-      vertical: 6.0,
+      vertical: 4.0,
     ),
     this.hintText = '',
   });
@@ -25,10 +25,8 @@ class NumberInputComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      keyboardType: TextInputType.number,
-      style: const TextStyle(fontSize: 14),
+      keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        fillColor: Colors.white,
         hintText: hintText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(borderRadius)),

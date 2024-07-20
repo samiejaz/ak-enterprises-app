@@ -8,7 +8,7 @@ Future<List<DeliveriesHistoryModel>> getAllDeliveriesHistory(
     String voucherDate) async {
   try {
     String url =
-        "${APIConstants.baseUrl}/GetAllDateWiseDeliveries/GetAllDateWiseDeliveries/";
+        "${APIConstants.baseUrl}/DeliveriesHistory/GetAllDateWiseHistoryDeliveries/";
 
     Map<String, dynamic> jsonBody = {'VoucherDate': voucherDate};
 

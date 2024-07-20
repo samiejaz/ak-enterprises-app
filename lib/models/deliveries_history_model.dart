@@ -4,14 +4,15 @@ class DeliveriesHistoryModel {
   String voucherNo;
   double amount;
   String status;
+  String voucherDate;
 
-  DeliveriesHistoryModel({
-    required this.voucherID,
-    required this.customerName,
-    required this.voucherNo,
-    required this.amount,
-    required this.status,
-  });
+  DeliveriesHistoryModel(
+      {required this.voucherID,
+      required this.customerName,
+      required this.voucherNo,
+      required this.amount,
+      required this.status,
+      required this.voucherDate});
 
   factory DeliveriesHistoryModel.fromJson(Map<String, dynamic> json) {
     return DeliveriesHistoryModel(
@@ -20,6 +21,7 @@ class DeliveriesHistoryModel {
       voucherNo: json['VoucherNo'] ?? '',
       amount: (json['Amount'] ?? 0).toDouble(),
       status: json['Status'] ?? '',
+      voucherDate: json['VoucherDate'] ?? '',
     );
   }
 

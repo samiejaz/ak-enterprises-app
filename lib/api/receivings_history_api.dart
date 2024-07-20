@@ -4,10 +4,11 @@ import 'package:ak_enterprises_app/models/receivings_history_model.dart';
 import 'package:ak_enterprises_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<ReceivingsHistoryModel>> getAllRecevings(String voucherDate) async {
+Future<List<ReceivingsHistoryModel>> getAllRecevingsHisotry(
+    String voucherDate) async {
   try {
     String url =
-        "${APIConstants.baseUrl}/GetAllDateWiseDeliveries/GetAllDateWiseDeliveries/";
+        "${APIConstants.baseUrl}/ReceivingsHistory/GetAllDateWiseReceivingsHistory/";
 
     Map<String, dynamic> jsonBody = {'VoucherDate': voucherDate};
 
