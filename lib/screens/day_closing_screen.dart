@@ -364,3 +364,21 @@ class DayClosingAmounts extends StatelessWidget {
     );
   }
 }
+
+class DayClosingAmountsTotal extends StatelessWidget {
+  const DayClosingAmountsTotal({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(color: Colors.amber),
+      child: const Row(
+        children: [
+          Column(
+            children: [],
+          )
+        ],
+      ),
+    );
+  }
+}

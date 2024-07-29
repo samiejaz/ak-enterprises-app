@@ -33,8 +33,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     },
     {
       "title": "Day Closing",
-      "icon": Icons.history,
+      "icon": Icons.close,
       "routeUrl": "/dayclosing",
+    },
+    {
+      "title": "Main Screen",
+      "icon": Icons.history,
+      "routeUrl": "/history",
     },
   ];
 
@@ -171,9 +176,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      "John Doe",
+                      "Salesman Name",
                       style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       formatDateToDDMMYYYY(DateTime.now()),
@@ -204,31 +209,31 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
                 // Addtional Links
 
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed("/history");
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.all(0),
-                    decoration: BoxDecoration(
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black54,
-                              blurRadius: 5,
-                              offset: Offset(0, 1),
-                              spreadRadius: 0.1,
-                              blurStyle: BlurStyle.normal),
-                        ],
-                        color: Colors.white,
-                        borderRadius: BorderRadiusDirectional.circular(5)),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 60, vertical: 10),
-                    child: const Text(
-                      "History",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                )
+                // GestureDetector(
+                //   onTap: () {
+                //     Navigator.of(context).pushNamed("/history");
+                //   },
+                //   child: Container(
+                //     margin: const EdgeInsets.all(0),
+                //     decoration: BoxDecoration(
+                //         boxShadow: const [
+                //           BoxShadow(
+                //               color: Colors.black54,
+                //               blurRadius: 5,
+                //               offset: Offset(0, 1),
+                //               spreadRadius: 0.1,
+                //               blurStyle: BlurStyle.normal),
+                //         ],
+                //         color: Colors.white,
+                //         borderRadius: BorderRadiusDirectional.circular(5)),
+                //     padding: const EdgeInsets.symmetric(
+                //         horizontal: 60, vertical: 10),
+                //     child: const Text(
+                //       "History",
+                //       style: TextStyle(color: Colors.black),
+                //     ),
+                //   ),
+                // )
               ],
             )),
       ),

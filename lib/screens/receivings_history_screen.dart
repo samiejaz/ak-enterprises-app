@@ -189,13 +189,13 @@ class _ReceivingsHistoryScreenState extends State<ReceivingsHistoryScreen> {
                                     },
                                   ),
                                   columns: const [
+                                    DataColumn(
+                                        label: Center(child: Text("Actions"))),
                                     DataColumn(label: Text("Sr")),
                                     DataColumn(label: Text("Customer Name")),
                                     DataColumn(label: Text("Inv #")),
                                     DataColumn(label: Text("Amount")),
                                     DataColumn(label: Text("Status")),
-                                    DataColumn(
-                                        label: Center(child: Text("Actions"))),
                                   ],
                                   rows: [
                                     DataRow(
@@ -228,6 +228,7 @@ class _ReceivingsHistoryScreenState extends State<ReceivingsHistoryScreen> {
                                           },
                                         ),
                                         cells: [
+                                          DataCell(getActions(delivery)),
                                           DataCell(
                                               Text((index + 1).toString())),
                                           DataCell(Text(delivery.customerName)),
@@ -235,7 +236,6 @@ class _ReceivingsHistoryScreenState extends State<ReceivingsHistoryScreen> {
                                           DataCell(
                                               Text(delivery.amount.toString())),
                                           DataCell(Text(delivery.status)),
-                                          DataCell(getActions(delivery)),
                                         ],
                                       );
                                     }),

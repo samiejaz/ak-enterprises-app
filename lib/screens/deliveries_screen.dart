@@ -142,6 +142,8 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                                     },
                                   ),
                                   columns: const [
+                                    DataColumn(
+                                        label: Center(child: Text("Actions"))),
                                     DataColumn(label: Text("Sr")),
                                     DataColumn(label: Text("Customer Name")),
                                     DataColumn(label: Text("Inv #")),
@@ -149,8 +151,6 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                                       label: Text("Amount"),
                                     ),
                                     DataColumn(label: Text("Status")),
-                                    DataColumn(
-                                        label: Center(child: Text("Actions")))
                                   ],
                                   rows: [
                                     ...snapshot.data!
@@ -167,6 +167,7 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                                             },
                                           ),
                                           cells: [
+                                            DataCell(getActions(delivery)),
                                             DataCell(
                                                 Text((index + 1).toString())),
                                             DataCell(
@@ -175,7 +176,6 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                                             DataCell(Text(
                                                 delivery.amount.toString())),
                                             DataCell(Text(delivery.status)),
-                                            DataCell(getActions(delivery)),
                                           ]);
                                     }),
                                     DataRow(
