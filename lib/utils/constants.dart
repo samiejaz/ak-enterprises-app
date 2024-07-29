@@ -13,7 +13,7 @@ class Constants {
 }
 
 class APIConstants {
-  static const String baseUrl = 'https://e732-110-39-141-170.ngrok-free.app';
+  static const String baseUrl = 'https://7271-110-39-141-170.ngrok-free.app';
 }
 
 class SecureStorageKeys {

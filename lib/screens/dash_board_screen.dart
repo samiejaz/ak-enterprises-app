@@ -1,6 +1,7 @@
 import 'package:ak_enterprises_app/utils/common_functions.dart';
 import 'package:ak_enterprises_app/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key});
@@ -15,71 +16,70 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       "title": "Today Deliveries",
       "icon": Icons.local_shipping,
       "routeUrl": "/deliveries",
+      "color": Colors.blue
     },
     {
       "title": "History",
       "icon": Icons.history,
       "routeUrl": "/deliverieshistory",
+      "color": Colors.red
     },
     {
       "title": "Today Receiving",
       "icon": Icons.receipt,
       "routeUrl": "/receivings",
+      "color": Colors.orange
     },
     {
       "title": "History",
       "icon": Icons.history,
       "routeUrl": "/receivingshistory",
+      "color": Colors.red
     },
     {
       "title": "Day Closing",
       "icon": Icons.close,
       "routeUrl": "/dayclosing",
+      "color": Colors.green
     },
     {
       "title": "Main Screen",
       "icon": Icons.history,
       "routeUrl": "/history",
+      "color": Colors.red
     },
   ];
 
-  Widget cardTile(String title, IconData icon, String routeUrl) {
+  Widget cardTile(String title, IconData icon, String routeUrl, Color color) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
           Navigator.pushNamed(context, routeUrl);
         },
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-            boxShadow: const [
-              BoxShadow(
-                  color: Colors.black54,
-                  blurRadius: 5,
-                  offset: Offset(0, 1),
-                  spreadRadius: 0.1,
-                  blurStyle: BlurStyle.normal),
-            ],
-          ),
-          child: Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                color: Colors.black,
-                size: 50,
+        child: Column(
+          children: [
+            Container(
+              width: 140,
+              padding: const EdgeInsets.all(40),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: color.withOpacity(0.2),
               ),
-              const SizedBox(height: 20),
-              Text(
-                title,
-                style: const TextStyle(color: Colors.black, fontSize: 18),
+              child: Center(
+                child: Icon(
+                  icon,
+                  color: color,
+                  size: 50,
+                ),
               ),
-            ],
-          )),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(title,
+                style: GoogleFonts.montserrat(color: color, fontSize: 16)),
+          ],
         ),
       ),
     );
@@ -141,99 +141,68 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        centerTitle: true,
-        title: const Text(
-          "Dashboard",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: IconButton(
-              onPressed: _logoutUser,
-              icon: const Icon(Icons.logout),
-              color: Colors.white,
+  Widget _renderTitle() {
+    return Container(
+      padding: const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Dashboard",
+                style: GoogleFonts.montserrat(
+                    fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "Saleman Name",
+                style: GoogleFonts.montserrat(fontSize: 18),
+              )
+            ],
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: Colors.blue,
             ),
+            width: 50,
+            height: 50,
           )
         ],
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 10,
-                ),
                 // Name
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Salesman Name",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      formatDateToDDMMYYYY(DateTime.now()),
-                      style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                // Links
+                _renderTitle(), // Links
                 SizedBox(
-                  height: 500,
+                  height: 650,
                   child: GridView.builder(
                     itemCount: items.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            mainAxisExtent: 150),
+                      crossAxisCount: 2,
+                    ),
                     itemBuilder: (BuildContext context, int index) {
-                      return cardTile(items[index]["title"],
-                          items[index]["icon"], items[index]["routeUrl"]);
+                      return cardTile(
+                          items[index]["title"],
+                          items[index]["icon"],
+                          items[index]["routeUrl"],
+                          items[index]["color"]);
                     },
                   ),
                 ),
-                // Addtional Links
-
-                // GestureDetector(
-                //   onTap: () {
-                //     Navigator.of(context).pushNamed("/history");
-                //   },
-                //   child: Container(
-                //     margin: const EdgeInsets.all(0),
-                //     decoration: BoxDecoration(
-                //         boxShadow: const [
-                //           BoxShadow(
-                //               color: Colors.black54,
-                //               blurRadius: 5,
-                //               offset: Offset(0, 1),
-                //               spreadRadius: 0.1,
-                //               blurStyle: BlurStyle.normal),
-                //         ],
-                //         color: Colors.white,
-                //         borderRadius: BorderRadiusDirectional.circular(5)),
-                //     padding: const EdgeInsets.symmetric(
-                //         horizontal: 60, vertical: 10),
-                //     child: const Text(
-                //       "History",
-                //       style: TextStyle(color: Colors.black),
-                //     ),
-                //   ),
-                // )
               ],
             )),
       ),
