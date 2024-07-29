@@ -25,7 +25,6 @@ Future<List<ReceivingsModel>> getAllRecevings(String voucherDate) async {
       throw Exception("${responseBody['error']}");
     }
   } catch (e) {
-    print(e);
     throw Exception("Failed to load deliveries!");
   }
 }
