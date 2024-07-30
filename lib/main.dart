@@ -7,6 +7,7 @@ import 'package:ak_enterprises_app/screens/login_screen.dart';
 import 'package:ak_enterprises_app/screens/receivings_history_screen.dart';
 import 'package:ak_enterprises_app/screens/receivings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,9 +22,26 @@ class MyApp extends StatelessWidget {
       title: 'AK Enterprises',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+          textTheme: TextTheme(
+              displayLarge: GoogleFonts.montserrat(),
+              displayMedium: GoogleFonts.montserrat(),
+              displaySmall: GoogleFonts.montserrat(),
+              labelLarge: GoogleFonts.montserrat(),
+              labelMedium: GoogleFonts.montserrat(),
+              labelSmall: GoogleFonts.montserrat(),
+              headlineLarge: GoogleFonts.montserrat(),
+              headlineMedium: GoogleFonts.montserrat(),
+              headlineSmall: GoogleFonts.montserrat(),
+              bodySmall: GoogleFonts.montserrat(),
+              bodyLarge: GoogleFonts.montserrat(),
+              titleLarge: GoogleFonts.montserrat(),
+              titleMedium: GoogleFonts.montserrat(),
+              titleSmall: GoogleFonts.montserrat(),
+              bodyMedium: GoogleFonts.montserrat()),
+          dialogBackgroundColor: Colors.white,
+          scaffoldBackgroundColor: Colors.white),
       initialRoute: "/dashboard",
       routes: {
         "/login": (context) => const LoginScreen(),

@@ -1,4 +1,5 @@
 import 'package:ak_enterprises_app/api/deliveries_api.dart';
+import 'package:ak_enterprises_app/components/title_component.dart';
 import 'package:ak_enterprises_app/models/deliveries_model.dart';
 import 'package:ak_enterprises_app/utils/common_functions.dart';
 import 'package:flutter/material.dart';
@@ -14,55 +15,51 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
   DateTime selectedDate = DateTime.now();
 
   // ** MOCK DATA
-  // List<DeliveriesModel> deliveries = [
-  //   DeliveriesModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "1",
-  //       amount: 19000,
-  //       status: "PENDING"),
-  //   DeliveriesModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "1",
-  //       amount: 19000,
-  //       status: "COMPLETED"),
-  //   DeliveriesModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "1",
-  //       amount: 19000,
-  //       status: "PENDING"),
-  //   DeliveriesModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "1",
-  //       amount: 19000,
-  //       status: "PENDING"),
-  // ];
+  List<DeliveriesModel> deliveries = [
+    DeliveriesModel(
+        voucherID: 1,
+        customerName: "Customer 1",
+        voucherNo: "1",
+        amount: 19000,
+        status: "PENDING"),
+    DeliveriesModel(
+        voucherID: 1,
+        customerName: "Customer 1",
+        voucherNo: "1",
+        amount: 19000,
+        status: "COMPLETED"),
+    DeliveriesModel(
+        voucherID: 1,
+        customerName: "Customer 1",
+        voucherNo: "1",
+        amount: 19000,
+        status: "PENDING"),
+    DeliveriesModel(
+        voucherID: 1,
+        customerName: "Customer 1",
+        voucherNo: "1",
+        amount: 19000,
+        status: "PENDING"),
+  ];
 
-  // Future<List<DeliveriesModel>> getD(String date) async {
-  //   print("Called!!");
-  //   return deliveries;
-  // }
+  Future<List<DeliveriesModel>> getD(String date) async {
+    print("Called!!");
+    return deliveries;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.blue,
-            title: const Text(
-              "Deliveries",
-              style: TextStyle(color: Colors.white),
-            ),
-            foregroundColor: Colors.white,
-          ),
-          body: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Container(
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              TitleComponent(
+                title: "Today Deliveries",
+                fontSize: 26,
+              ),
+              Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                 child: Column(
@@ -108,19 +105,14 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Center(
-                      child: Text(
-                        "Today Deliveries",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ),
                     const SizedBox(
                       height: 10,
                     ),
                     FutureBuilder(
-                        future: getAllDeliveries(
-                            formatDateToDDMMYYYY(selectedDate)),
+
+                        // future: getAllDeliveries(
+                        //     formatDateToDDMMYYYY(selectedDate)),
+                        future: getD(formatDateToDDMMYYYY(selectedDate)),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             String totalAmount = snapshot.data!
@@ -211,7 +203,9 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                           }
                         })
                   ],
-                )),
+                ),
+              )
+            ],
           ),
         ),
       ),

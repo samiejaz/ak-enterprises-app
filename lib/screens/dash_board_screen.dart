@@ -1,6 +1,6 @@
+import 'package:ak_enterprises_app/screens/login_screen.dart';
 import 'package:ak_enterprises_app/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -75,16 +75,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 color: Colors.white.withOpacity(0.2),
               ),
               child: Center(
-                // child: Icon(
-                //   icon,
-                //   color: color,
-                //   size: 50,
-                // ),
-                // child: SvgPicture.asset(
-                //   imagePath,
-                //   semanticsLabel: 'Acme Logo$imagePath',
-                //   height: 60,
-                // ),
                 child: Image.asset(
                   imagePath,
                   width: 70,
@@ -126,10 +116,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     // secureStorage.deleteSecureData(SecureStorageKeys.email);
 
                     // Navigator.of(context).pop();
-                    // Navigator.pushReplacement(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => const LoginPage()));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()));
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -162,7 +152,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   Widget _renderTitle() {
     return Container(
       decoration: const BoxDecoration(
-          color: Color.fromRGBO(8, 37, 224, 1),
+          color: Constants.primaryColor,
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.elliptical(45, 20),
               bottomRight: Radius.elliptical(45, 20))),
@@ -187,16 +177,19 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               )
             ],
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: const Color.fromRGBO(169, 43, 89, 1),
-            ),
-            width: 40,
-            height: 40,
-            child: const Icon(
-              Icons.logout,
-              color: Colors.white,
+          GestureDetector(
+            onTap: _logoutUser,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: const Color.fromRGBO(169, 43, 89, 1),
+              ),
+              width: 40,
+              height: 40,
+              child: const Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
             ),
           )
         ],
@@ -207,29 +200,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: ClipRRect(
-      //   borderRadius: const BorderRadius.only(
-      //     topRight: Radius.elliptical(45, 20),
-      //     topLeft: Radius.elliptical(45, 20),
-      //   ),
-      //   child: BottomNavigationBar(
-      //     backgroundColor: const Color.fromRGBO(8, 37, 224, 1),
-      //     items: const [
-      //       BottomNavigationBarItem(
-      //           icon: Icon(
-      //             Icons.dashboard,
-      //             color: Color.fromRGBO(8, 37, 224, 1),
-      //           ),
-      //           label: ""),
-      //       BottomNavigationBarItem(
-      //           icon: Icon(
-      //             Icons.dashboard,
-      //             color: Color.fromRGBO(8, 37, 224, 1),
-      //           ),
-      //           label: "")
-      //     ],
-      //   ),
-      // ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
@@ -265,12 +235,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
                 child: Container(
                   decoration:
-                      const BoxDecoration(color: Color.fromRGBO(8, 37, 224, 1)),
+                      const BoxDecoration(color: Constants.primaryColor),
                   child: Center(
                       child: RichText(
                     text: TextSpan(
-                      text: 'Developed At ',
-                      style: DefaultTextStyle.of(context).style,
+                      text: 'Developed By ',
+                      style: GoogleFonts.montserrat(),
                       children: const <TextSpan>[
                         TextSpan(
                             text: 'Edusoft',

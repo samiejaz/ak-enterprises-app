@@ -5,9 +5,9 @@ class Constants {
   static const Color textColor = Color.fromRGBO(0, 0, 0, 1);
 
   // static const Color primaryColor = Color.fromRGBO(250, 204, 21, 1);
-  static const Color primaryColor = Color.fromRGBO(234, 179, 8, 1);
+  static const Color primaryColor = Color.fromRGBO(41, 13, 209, 1);
 
-  static const Color secondaryColor = Color.fromRGBO(65, 105, 225, 1);
+  static const Color secondaryColor = Color.fromRGBO(209, 13, 73, 1);
   static const Color dangerColor = Color(0xFFFF0000);
   static const Color accentColor = Color(0xFFFFC107);
 }

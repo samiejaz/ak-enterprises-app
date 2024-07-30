@@ -1,4 +1,7 @@
+import 'package:ak_enterprises_app/components/title_component.dart';
+import 'package:ak_enterprises_app/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class DayClosingScreen extends StatefulWidget {
@@ -21,25 +24,18 @@ class _DayClosingScreenState extends State<DayClosingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: SafeArea(
-        child: Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.white,
-            child: const Icon(Icons.save),
-          ),
-          appBar: AppBar(
-            backgroundColor: Colors.blue,
-            title: const Text(
-              "Day Closing",
-              style: TextStyle(color: Colors.white),
-            ),
-            foregroundColor: Colors.white,
-          ),
-          body: Container(
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: Colors.green,
+          foregroundColor: Colors.white,
+          child: const Icon(Icons.save),
+        ),
+        body: Column(
+          children: [
+            TitleComponent(title: "Day Closing"),
+            Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
               child: Column(
                 children: [
@@ -138,27 +134,10 @@ class _DayClosingScreenState extends State<DayClosingScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  // const Spacer(),
-                  // GestureDetector(
-                  //   child: Container(
-                  //     width: double.infinity,
-                  //     decoration: const BoxDecoration(
-                  //         color: Color.fromARGB(255, 39, 187, 76)),
-                  //     padding: const EdgeInsets.symmetric(
-                  //         horizontal: 40, vertical: 15),
-                  //     child: const Center(
-                  //       child: Text(
-                  //         "Save",
-                  //         style: TextStyle(
-                  //             color: Colors.white,
-                  //             fontWeight: FontWeight.w700,
-                  //             fontSize: 16),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // )
                 ],
-              )),
+              ),
+            ),
+          ],
         ),
       ),
     );

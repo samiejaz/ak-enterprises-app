@@ -1,8 +1,7 @@
-import 'package:ak_enterprises_app/api/deliveries_history_api.dart';
-import 'package:ak_enterprises_app/models/deliveries_history_model.dart';
+import 'package:ak_enterprises_app/components/title_component.dart';
+import 'package:ak_enterprises_app/models/deliveries_model.dart';
 import 'package:ak_enterprises_app/utils/common_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class DeliveriesHistoryScreen extends StatefulWidget {
   const DeliveriesHistoryScreen({super.key});
@@ -15,73 +14,51 @@ class DeliveriesHistoryScreen extends StatefulWidget {
 class _DeliveriesHistoryScreenState extends State<DeliveriesHistoryScreen> {
   DateTime selectedDate = DateTime.now();
 
-// ** MOCK DATA
-  // List<DeliveriesHistoryModel> deliveries = [
-  //   DeliveriesHistoryModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "1",
-  //       amount: 19000,
-  //       voucherDate: "10-Jul-2024",
-  //       status: "PENDING"),
-  //   DeliveriesHistoryModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "1",
-  //       amount: 19000,
-  //       voucherDate: "10-Jul-2024",
-  //       status: "COMPLETED"),
-  //   DeliveriesHistoryModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "12",
-  //       amount: 19000,
-  //       voucherDate: "12-Jul-2024",
-  //       status: "PENDING"),
-  //   DeliveriesHistoryModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "12",
-  //       amount: 19000,
-  //       voucherDate: "12-Jul-2024",
-  //       status: "PENDING"),
-  //   DeliveriesHistoryModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "12",
-  //       amount: 19000,
-  //       voucherDate: "13-Jul-2024",
-  //       status: "PENDING"),
-  //   DeliveriesHistoryModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "12",
-  //       amount: 19000,
-  //       voucherDate: "15-Jul-2024",
-  //       status: "PENDING"),
-  // ];
+  // ** MOCK DATA
+  List<DeliveriesModel> deliveries = [
+    DeliveriesModel(
+        voucherID: 1,
+        customerName: "Customer 1",
+        voucherNo: "1",
+        amount: 19000,
+        status: "PENDING"),
+    DeliveriesModel(
+        voucherID: 1,
+        customerName: "Customer 1",
+        voucherNo: "1",
+        amount: 19000,
+        status: "COMPLETED"),
+    DeliveriesModel(
+        voucherID: 1,
+        customerName: "Customer 1",
+        voucherNo: "1",
+        amount: 19000,
+        status: "PENDING"),
+    DeliveriesModel(
+        voucherID: 1,
+        customerName: "Customer 1",
+        voucherNo: "1",
+        amount: 19000,
+        status: "PENDING"),
+  ];
 
-  // Future<List<DeliveriesHistoryModel>> getD(String date) async {
-  //   return deliveries;
-  // }
+  Future<List<DeliveriesModel>> getD(String date) async {
+    return deliveries;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.blue,
-            title: const Text(
-              "Deliveries History",
-              style: TextStyle(color: Colors.white),
-            ),
-            foregroundColor: Colors.white,
-          ),
-          body: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Container(
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              TitleComponent(
+                title: "Delivery History",
+                fontSize: 26,
+              ),
+              Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                 child: Column(
@@ -127,59 +104,26 @@ class _DeliveriesHistoryScreenState extends State<DeliveriesHistoryScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Center(
-                      child: Text(
-                        "History Deliveries",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ),
                     const SizedBox(
                       height: 10,
                     ),
                     FutureBuilder(
-                      future: getAllDeliveriesHistory(
-                          formatDateToDDMMYYYY(selectedDate)),
-                      builder: (context,
-                          AsyncSnapshot<List<DeliveriesHistoryModel>>
-                              snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        } else if (snapshot.hasError) {
-                          return const Center(child: Text("Error!"));
-                        } else if (!snapshot.hasData ||
-                            snapshot.data!.isEmpty) {
-                          return const Center(child: Text("No Data Found!"));
-                        } else {
-                          Map<String, List<DeliveriesHistoryModel>>
-                              groupedDeliveries = {};
-                          for (var delivery in snapshot.data!) {
-                            if (!groupedDeliveries
-                                .containsKey(delivery.voucherDate)) {
-                              groupedDeliveries[delivery.voucherDate] = [];
-                            }
-                            groupedDeliveries[delivery.voucherDate]!
-                                .add(delivery);
-                          }
 
-                          return SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: groupedDeliveries.entries.map((entry) {
-                                String voucherDate = entry.key;
-                                List<DeliveriesHistoryModel> deliveries =
-                                    entry.value;
+                        // future: getAllDeliveries(
+                        //     formatDateToDDMMYYYY(selectedDate)),
+                        future: getD(formatDateToDDMMYYYY(selectedDate)),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            String totalAmount = snapshot.data!
+                                .fold<double>(
+                                    0,
+                                    (previousValue, element) =>
+                                        previousValue + element.amount)
+                                .toString();
 
-                                double totalAmount = deliveries.fold(0,
-                                    (sum, delivery) => sum + delivery.amount);
-
-                                String formattedTotalAmount =
-                                    NumberFormat('##0.00').format(totalAmount);
-
-                                return DataTable(
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: DataTable(
                                   headingTextStyle:
                                       const TextStyle(color: Colors.white),
                                   headingRowColor:
@@ -194,46 +138,36 @@ class _DeliveriesHistoryScreenState extends State<DeliveriesHistoryScreen> {
                                     DataColumn(label: Text("Sr")),
                                     DataColumn(label: Text("Customer Name")),
                                     DataColumn(label: Text("Inv #")),
-                                    DataColumn(label: Text("Amount")),
+                                    DataColumn(
+                                      label: Text("Amount"),
+                                    ),
                                     DataColumn(label: Text("Status")),
                                   ],
                                   rows: [
-                                    DataRow(
-                                      color:
-                                          WidgetStateProperty.all(Colors.white),
-                                      cells: [
-                                        DataCell(Text(voucherDate,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold))),
-                                        const DataCell(Text('')),
-                                        const DataCell(Text('')),
-                                        const DataCell(Text('')),
-                                        const DataCell(Text('')),
-                                        const DataCell(Text('')),
-                                      ],
-                                    ),
-                                    ...deliveries.asMap().entries.map((entry) {
+                                    ...snapshot.data!
+                                        .asMap()
+                                        .entries
+                                        .map((entry) {
                                       int index = entry.key;
-                                      DeliveriesHistoryModel delivery =
-                                          entry.value;
+                                      DeliveriesModel delivery = entry.value;
                                       return DataRow(
-                                        color: WidgetStateProperty.resolveWith<
-                                            Color>(
-                                          (Set<WidgetState> states) {
-                                            return getColor(delivery.status);
-                                          },
-                                        ),
-                                        cells: [
-                                          DataCell(getActions(delivery)),
-                                          DataCell(
-                                              Text((index + 1).toString())),
-                                          DataCell(Text(delivery.customerName)),
-                                          DataCell(Text(delivery.voucherNo)),
-                                          DataCell(
-                                              Text(delivery.amount.toString())),
-                                          DataCell(Text(delivery.status)),
-                                        ],
-                                      );
+                                          color: WidgetStateProperty
+                                              .resolveWith<Color>(
+                                            (Set<WidgetState> states) {
+                                              return getColor(delivery.status);
+                                            },
+                                          ),
+                                          cells: [
+                                            DataCell(getActions(delivery)),
+                                            DataCell(
+                                                Text((index + 1).toString())),
+                                            DataCell(
+                                                Text(delivery.customerName)),
+                                            DataCell(Text(delivery.voucherNo)),
+                                            DataCell(Text(
+                                                delivery.amount.toString())),
+                                            DataCell(Text(delivery.status)),
+                                          ]);
                                     }),
                                     DataRow(
                                       color: WidgetStateProperty.all(
@@ -244,23 +178,33 @@ class _DeliveriesHistoryScreenState extends State<DeliveriesHistoryScreen> {
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold))),
                                         const DataCell(Text('')),
-                                        DataCell(Text(formattedTotalAmount,
+                                        DataCell(Text(totalAmount,
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold))),
                                         const DataCell(Text('')),
                                         const DataCell(Text('')),
                                       ],
                                     ),
-                                  ],
-                                );
-                              }).toList(),
-                            ),
-                          );
-                        }
-                      },
-                    )
+                                  ]),
+                            );
+                          } else if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return const Center(
+                              child: Text("Error!"),
+                            );
+                          } else {
+                            return const Center(
+                              child: Text("No Data Found!"),
+                            );
+                          }
+                        })
                   ],
-                )),
+                ),
+              )
+            ],
           ),
         ),
       ),
@@ -268,7 +212,7 @@ class _DeliveriesHistoryScreenState extends State<DeliveriesHistoryScreen> {
   }
 }
 
-Widget getActions(DeliveriesHistoryModel delivery) {
+Widget getActions(DeliveriesModel delivery) {
   return Row(
     children: [
       IconButton(
