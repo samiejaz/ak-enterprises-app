@@ -1,5 +1,7 @@
 import 'package:ak_enterprises_app/components/title_component.dart';
 import 'package:ak_enterprises_app/utils/constants.dart';
+import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -80,56 +82,35 @@ class _DayClosingScreenState extends State<DayClosingScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Day Cosing/Handover",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w700),
-                      )
-                    ],
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        DataCard(
+                          heading: "Total Supplies",
+                        ),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        DataCard(
+                          heading: "Total Receveings",
+                          backgroundColor: Colors.green,
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      DayClosingAmounts(
-                        headerTitle: "Total Supplies: ",
-                        cash: 19000,
-                        receiving: 190000,
-                        cheque: 199000,
-                        online: 190000,
-                        returnAmount: 1000,
-                      ),
-                      DayClosingAmounts(
-                        headerTitle: "Total Receivings: ",
-                        cash: 19000,
-                        receiving: 190000,
-                        cheque: 199000,
-                        online: 190000,
-                        returnAmount: 1000,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      DayClosingAmounts(
-                        headerTitle: "Total: ",
-                        cash: 19000,
-                        receiving: 190000,
-                        cheque: 199000,
-                        online: 190000,
-                        returnAmount: 1000,
-                        showHandOverButton: true,
-                      ),
-                    ],
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [DataCardWithHandOverButtons(heading: 'Total')],
+                    ),
                   ),
                   const SizedBox(
                     height: 15,
@@ -144,218 +125,140 @@ class _DayClosingScreenState extends State<DayClosingScreen> {
   }
 }
 
-class DayClosingAmounts extends StatelessWidget {
-  final bool showHandOverButton;
-  final String headerTitle;
-  final double? cash;
-  final double? receiving;
-  final double? cheque;
-  final double? online;
-  final double? returnAmount;
+class DataCard extends StatelessWidget {
+  Color? backgroundColor = Colors.blue;
+  Color? textColor = Colors.white;
+  String heading = "";
 
-  const DayClosingAmounts({
-    super.key,
-    required this.headerTitle,
-    this.cash,
-    this.receiving,
-    this.cheque,
-    this.online,
-    this.returnAmount,
-    this.showHandOverButton = false,
-  });
+  DataCard(
+      {super.key,
+      this.backgroundColor = Colors.blue,
+      this.textColor = Colors.white,
+      required this.heading});
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          headerTitle,
-          style: const TextStyle(
-              fontSize: 14,
-              decoration: TextDecoration.underline,
-              fontWeight: FontWeight.w700),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          children: [
-            Column(
-              children: [
-                Row(
-                  children: [
-                    const Text(
-                      "Cash: ",
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      cash != null ? cash!.toStringAsFixed(2) : "",
-                      style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            Column(
-              children: [
-                if (showHandOverButton) ...[
-                  TextButton(onPressed: () {}, child: const Text("Handover"))
-                ]
-              ],
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          children: [
-            Column(
-              children: [
-                Row(
-                  children: [
-                    const Text(
-                      "Recivings: ",
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      receiving != null ? receiving!.toStringAsFixed(2) : "",
-                      style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            Column(
-              children: [
-                if (showHandOverButton) ...[
-                  TextButton(onPressed: () {}, child: const Text("Handover"))
-                ]
-              ],
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          children: [
-            Column(
-              children: [
-                Row(
-                  children: [
-                    const Text(
-                      "Cheque: ",
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      cheque != null ? cheque!.toStringAsFixed(2) : "",
-                      style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            Column(
-              children: [
-                if (showHandOverButton) ...[
-                  TextButton(onPressed: () {}, child: const Text("Handover"))
-                ]
-              ],
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          children: [
-            Column(
-              children: [
-                Row(
-                  children: [
-                    const Text(
-                      "Online: ",
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      online != null ? online!.toStringAsFixed(2) : "",
-                      style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            Column(
-              children: [
-                if (showHandOverButton) ...[
-                  TextButton(onPressed: () {}, child: const Text("Handover"))
-                ]
-              ],
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                Row(
-                  children: [
-                    const Text(
-                      "Return: ",
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      returnAmount != null
-                          ? returnAmount!.toStringAsFixed(2)
-                          : "",
-                      style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            Column(
-              children: [
-                if (showHandOverButton) ...[
-                  TextButton(onPressed: () {}, child: const Text("Handover"))
-                ]
-              ],
-            )
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class DayClosingAmountsTotal extends StatelessWidget {
-  const DayClosingAmountsTotal({super.key});
+  final Map<String, String> data = {
+    "Cash": "1900000000000",
+    "Receivings": "190000",
+    "Cheque": "190000",
+    "Online": "190000",
+    "Return": "190000"
+  };
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(color: Colors.amber),
-      child: const Row(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          color: backgroundColor, borderRadius: BorderRadius.circular(10)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            children: [],
-          )
+          Text(
+            heading,
+            style: TextStyle(
+                fontSize: 16,
+                color: textColor,
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+                decorationColor: textColor),
+          ),
+          const SizedBox(height: 15.0),
+          ...data.entries.map((item) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: "${item.key}: ",
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: item.value,
+                        style: GoogleFonts.montserrat(
+                            color: textColor, fontWeight: FontWeight.w800),
+                      ),
+                    ],
+                    style: GoogleFonts.montserrat(
+                        color: textColor, fontWeight: FontWeight.w800),
+                  ),
+                ),
+                const SizedBox(height: 15.0),
+              ],
+            );
+          }),
+        ],
+      ),
+    );
+  }
+}
+
+class DataCardWithHandOverButtons extends StatelessWidget {
+  Color? backgroundColor = Colors.blue;
+  Color? textColor = Colors.white;
+  String heading = "";
+
+  DataCardWithHandOverButtons(
+      {super.key,
+      this.backgroundColor = Constants.primaryColor,
+      this.textColor = Colors.white,
+      required this.heading});
+
+  final Map<String, String> data = {
+    "Cash": "1900000000000",
+    "Receivings": "190000",
+    "Cheque": "190000",
+    "Online": "190000",
+    "Return": "190000"
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          color: backgroundColor, borderRadius: BorderRadius.circular(10)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            heading,
+            style: TextStyle(
+                fontSize: 16,
+                color: textColor,
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+                decorationColor: textColor),
+          ),
+          const SizedBox(height: 15.0),
+          ...data.entries.map((item) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: "${item.key}: ",
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "${item.value}  ",
+                        style: GoogleFonts.montserrat(
+                            color: textColor, fontWeight: FontWeight.w800),
+                      ),
+                      TextSpan(
+                        text: "Handover",
+                        style: GoogleFonts.montserrat(
+                            color: textColor,
+                            fontWeight: FontWeight.w800,
+                            decoration: TextDecoration.underline),
+                        recognizer: TapGestureRecognizer()..onTap = () {},
+                      ),
+                    ],
+                    style: GoogleFonts.montserrat(
+                        color: textColor, fontWeight: FontWeight.w800),
+                  ),
+                ),
+                const SizedBox(height: 15.0),
+              ],
+            );
+          }),
         ],
       ),
     );

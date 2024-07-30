@@ -24,6 +24,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
+          datePickerTheme:
+              const DatePickerThemeData(backgroundColor: Colors.white),
           textTheme: TextTheme(
               displayLarge: GoogleFonts.montserrat(),
               displayMedium: GoogleFonts.montserrat(),
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
               bodyMedium: GoogleFonts.montserrat()),
           dialogBackgroundColor: Colors.white,
           scaffoldBackgroundColor: Colors.white),
-      initialRoute: "/dashboard",
+      initialRoute: "/login",
       routes: {
         "/login": (context) => const LoginScreen(),
         "/dashboard": (context) => const DashBoardScreen(),

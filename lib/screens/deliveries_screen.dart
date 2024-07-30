@@ -1,4 +1,3 @@
-import 'package:ak_enterprises_app/api/deliveries_api.dart';
 import 'package:ak_enterprises_app/components/title_component.dart';
 import 'package:ak_enterprises_app/models/deliveries_model.dart';
 import 'package:ak_enterprises_app/utils/common_functions.dart';
@@ -19,31 +18,30 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
     DeliveriesModel(
         voucherID: 1,
         customerName: "Customer 1",
-        voucherNo: "1",
+        voucherNo: "234234231",
         amount: 19000,
         status: "PENDING"),
     DeliveriesModel(
         voucherID: 1,
         customerName: "Customer 1",
-        voucherNo: "1",
+        voucherNo: "123432",
         amount: 19000,
         status: "COMPLETED"),
     DeliveriesModel(
         voucherID: 1,
         customerName: "Customer 1",
-        voucherNo: "1",
+        voucherNo: "133223",
         amount: 19000,
         status: "PENDING"),
     DeliveriesModel(
         voucherID: 1,
         customerName: "Customer 1",
-        voucherNo: "1",
+        voucherNo: "1232323",
         amount: 19000,
         status: "PENDING"),
   ];
 
   Future<List<DeliveriesModel>> getD(String date) async {
-    print("Called!!");
     return deliveries;
   }
 
@@ -109,9 +107,6 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                       height: 10,
                     ),
                     FutureBuilder(
-
-                        // future: getAllDeliveries(
-                        //     formatDateToDDMMYYYY(selectedDate)),
                         future: getD(formatDateToDDMMYYYY(selectedDate)),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
@@ -125,6 +120,9 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                             return SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: DataTable(
+                                  dataRowMaxHeight: double.infinity,
+                                  horizontalMargin: 5,
+                                  columnSpacing: 10,
                                   headingTextStyle:
                                       const TextStyle(color: Colors.white),
                                   headingRowColor:
@@ -136,13 +134,28 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                                   columns: const [
                                     DataColumn(
                                         label: Center(child: Text("Actions"))),
-                                    DataColumn(label: Text("Sr")),
-                                    DataColumn(label: Text("Customer Name")),
-                                    DataColumn(label: Text("Inv #")),
+                                    DataColumn(
+                                        label: Expanded(
+                                            child: Text(
+                                      'Sr',
+                                      textAlign: TextAlign.center,
+                                    ))),
+                                    DataColumn(label: Text("Customer")),
+                                    DataColumn(
+                                        label: Expanded(
+                                            child: Text(
+                                      'Inv #',
+                                      textAlign: TextAlign.center,
+                                    ))),
                                     DataColumn(
                                       label: Text("Amount"),
                                     ),
-                                    DataColumn(label: Text("Status")),
+                                    DataColumn(
+                                        label: Expanded(
+                                            child: Text(
+                                      'Status',
+                                      textAlign: TextAlign.center,
+                                    ))),
                                   ],
                                   rows: [
                                     ...snapshot.data!
@@ -161,13 +174,50 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                                           cells: [
                                             DataCell(getActions(delivery)),
                                             DataCell(
-                                                Text((index + 1).toString())),
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  (index + 1).toString(),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
                                             DataCell(
-                                                Text(delivery.customerName)),
-                                            DataCell(Text(delivery.voucherNo)),
+                                              SizedBox(
+                                                width: 100,
+                                                child: Text(
+                                                  delivery.customerName,
+                                                  overflow:
+                                                      TextOverflow.visible,
+                                                  softWrap: true,
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: SizedBox(
+                                                  width: 80,
+                                                  child: Text(
+                                                    delivery.voucherNo,
+                                                    overflow:
+                                                        TextOverflow.visible,
+                                                    softWrap: true,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
                                             DataCell(Text(
                                                 delivery.amount.toString())),
-                                            DataCell(Text(delivery.status)),
+                                            DataCell(
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  delivery.status,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
                                           ]);
                                     }),
                                     DataRow(
@@ -216,20 +266,25 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
 Widget getActions(DeliveriesModel delivery) {
   return Row(
     children: [
-      IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.remove_red_eye),
-        color: Colors.blueGrey,
+      SizedBox(
+        width: 25,
+        child: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.remove_red_eye,
+          ),
+          color: Colors.blueGrey,
+        ),
       ),
-      IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.edit),
-        color: Colors.green,
-      ),
-      IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.delete),
-        color: Colors.red,
+      SizedBox(
+        width: 25,
+        child: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.edit,
+          ),
+          color: Colors.green,
+        ),
       ),
     ],
   );

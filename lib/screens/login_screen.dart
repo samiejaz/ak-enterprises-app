@@ -17,8 +17,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _login() {
     if (_formKey.currentState!.validate()) {
-      // String username = _usernameController.text;
-      // String password = _passwordController.text;
+      String username = _usernameController.text;
+      String password = _passwordController.text;
+
+      if (username == "admin" && password == "admin") {
+        Navigator.of(context).pushNamed("/dashboard");
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

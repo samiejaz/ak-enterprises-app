@@ -1,6 +1,5 @@
-import 'package:ak_enterprises_app/api/receivings_api.dart';
-
-import 'package:ak_enterprises_app/models/receivings_model.dart';
+import 'package:ak_enterprises_app/components/title_component.dart';
+import 'package:ak_enterprises_app/models/deliveries_model.dart';
 import 'package:ak_enterprises_app/utils/common_functions.dart';
 import 'package:flutter/material.dart';
 
@@ -8,62 +7,57 @@ class ReceivingsScreen extends StatefulWidget {
   const ReceivingsScreen({super.key});
 
   @override
-  State<ReceivingsScreen> createState() => ReceivingsScreenState();
+  State<ReceivingsScreen> createState() => _ReceivingsScreenState();
 }
 
-class ReceivingsScreenState extends State<ReceivingsScreen> {
+class _ReceivingsScreenState extends State<ReceivingsScreen> {
   DateTime selectedDate = DateTime.now();
 
   // ** MOCK DATA
-  // List<ReceivingsModel> deliveries = [
-  //   ReceivingsModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "1",
-  //       amount: 19000,
-  //       status: "PENDING"),
-  //   ReceivingsModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "1",
-  //       amount: 19000,
-  //       status: "COMPLETED"),
-  //   ReceivingsModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "1",
-  //       amount: 19000,
-  //       status: "PENDING"),
-  //   ReceivingsModel(
-  //       voucherID: 1,
-  //       customerName: "Customer 1",
-  //       voucherNo: "1",
-  //       amount: 19000,
-  //       status: "PENDING"),
-  // ];
+  List<DeliveriesModel> deliveries = [
+    DeliveriesModel(
+        voucherID: 1,
+        customerName: "Customer 1",
+        voucherNo: "234234231",
+        amount: 19000,
+        status: "PENDING"),
+    DeliveriesModel(
+        voucherID: 1,
+        customerName: "Customer 1",
+        voucherNo: "123432",
+        amount: 19000,
+        status: "COMPLETED"),
+    DeliveriesModel(
+        voucherID: 1,
+        customerName: "Customer 1",
+        voucherNo: "133223",
+        amount: 19000,
+        status: "PENDING"),
+    DeliveriesModel(
+        voucherID: 1,
+        customerName: "Customer 1",
+        voucherNo: "1232323",
+        amount: 19000,
+        status: "PENDING"),
+  ];
 
-  // Future<List<ReceivingsModel>> getD(String date) async {
-  //   print("Called!!");
-  //   return deliveries;
-  // }
+  Future<List<DeliveriesModel>> getD(String date) async {
+    return deliveries;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.blue,
-            title: const Text(
-              "Receivings",
-              style: TextStyle(color: Colors.white),
-            ),
-            foregroundColor: Colors.white,
-          ),
-          body: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Container(
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              TitleComponent(
+                title: "Today Recevings",
+                fontSize: 26,
+              ),
+              Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                 child: Column(
@@ -109,19 +103,11 @@ class ReceivingsScreenState extends State<ReceivingsScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Center(
-                      child: Text(
-                        "Today Receivings",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ),
                     const SizedBox(
                       height: 10,
                     ),
                     FutureBuilder(
-                        future:
-                            getAllRecevings(formatDateToDDMMYYYY(selectedDate)),
+                        future: getD(formatDateToDDMMYYYY(selectedDate)),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             String totalAmount = snapshot.data!
@@ -134,6 +120,9 @@ class ReceivingsScreenState extends State<ReceivingsScreen> {
                             return SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: DataTable(
+                                  dataRowMaxHeight: double.infinity,
+                                  horizontalMargin: 5,
+                                  columnSpacing: 10,
                                   headingTextStyle:
                                       const TextStyle(color: Colors.white),
                                   headingRowColor:
@@ -145,13 +134,28 @@ class ReceivingsScreenState extends State<ReceivingsScreen> {
                                   columns: const [
                                     DataColumn(
                                         label: Center(child: Text("Actions"))),
-                                    DataColumn(label: Text("Sr")),
-                                    DataColumn(label: Text("Customer Name")),
-                                    DataColumn(label: Text("Inv #")),
+                                    DataColumn(
+                                        label: Expanded(
+                                            child: Text(
+                                      'Sr',
+                                      textAlign: TextAlign.center,
+                                    ))),
+                                    DataColumn(label: Text("Customer")),
+                                    DataColumn(
+                                        label: Expanded(
+                                            child: Text(
+                                      'Inv #',
+                                      textAlign: TextAlign.center,
+                                    ))),
                                     DataColumn(
                                       label: Text("Amount"),
                                     ),
-                                    DataColumn(label: Text("Status")),
+                                    DataColumn(
+                                        label: Expanded(
+                                            child: Text(
+                                      'Status',
+                                      textAlign: TextAlign.center,
+                                    ))),
                                   ],
                                   rows: [
                                     ...snapshot.data!
@@ -159,7 +163,7 @@ class ReceivingsScreenState extends State<ReceivingsScreen> {
                                         .entries
                                         .map((entry) {
                                       int index = entry.key;
-                                      ReceivingsModel delivery = entry.value;
+                                      DeliveriesModel delivery = entry.value;
                                       return DataRow(
                                           color: WidgetStateProperty
                                               .resolveWith<Color>(
@@ -170,13 +174,50 @@ class ReceivingsScreenState extends State<ReceivingsScreen> {
                                           cells: [
                                             DataCell(getActions(delivery)),
                                             DataCell(
-                                                Text((index + 1).toString())),
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  (index + 1).toString(),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
                                             DataCell(
-                                                Text(delivery.customerName)),
-                                            DataCell(Text(delivery.voucherNo)),
+                                              SizedBox(
+                                                width: 100,
+                                                child: Text(
+                                                  delivery.customerName,
+                                                  overflow:
+                                                      TextOverflow.visible,
+                                                  softWrap: true,
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: SizedBox(
+                                                  width: 80,
+                                                  child: Text(
+                                                    delivery.voucherNo,
+                                                    overflow:
+                                                        TextOverflow.visible,
+                                                    softWrap: true,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
                                             DataCell(Text(
                                                 delivery.amount.toString())),
-                                            DataCell(Text(delivery.status)),
+                                            DataCell(
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  delivery.status,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
                                           ]);
                                     }),
                                     DataRow(
@@ -206,33 +247,15 @@ class ReceivingsScreenState extends State<ReceivingsScreen> {
                               child: Text("Error!"),
                             );
                           } else {
-                            return DataTable(
-                              columns: const [
-                                DataColumn(label: Text("Sr")),
-                                DataColumn(label: Text("Customer Name")),
-                                DataColumn(label: Text("Inv #")),
-                                DataColumn(
-                                  label: Text("Amount"),
-                                ),
-                                DataColumn(label: Text("Status")),
-                                DataColumn(
-                                    label: Center(child: Text("Actions")))
-                              ],
-                              rows: const [
-                                DataRow(cells: [
-                                  DataCell(Text("No Record(s) Found!")),
-                                  DataCell(Text("")),
-                                  DataCell(Text("")),
-                                  DataCell(Text("")),
-                                  DataCell(Text("")),
-                                  DataCell(Text("")),
-                                ])
-                              ],
+                            return const Center(
+                              child: Text("No Data Found!"),
                             );
                           }
                         })
                   ],
-                )),
+                ),
+              )
+            ],
           ),
         ),
       ),
@@ -240,23 +263,28 @@ class ReceivingsScreenState extends State<ReceivingsScreen> {
   }
 }
 
-Widget getActions(ReceivingsModel delivery) {
+Widget getActions(DeliveriesModel delivery) {
   return Row(
     children: [
-      IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.remove_red_eye),
-        color: Colors.blueGrey,
+      SizedBox(
+        width: 25,
+        child: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.remove_red_eye,
+          ),
+          color: Colors.blueGrey,
+        ),
       ),
-      IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.edit),
-        color: Colors.green,
-      ),
-      IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.delete),
-        color: Colors.red,
+      SizedBox(
+        width: 25,
+        child: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.edit,
+          ),
+          color: Colors.green,
+        ),
       ),
     ],
   );
